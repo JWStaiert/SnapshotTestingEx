@@ -7,8 +7,8 @@ let package = Package(
   name: "SnapshotTestingEx",
 
   platforms: [
-    .iOS(.v11),
     .macOS(.v10_10),
+    .iOS(.v11),
     .tvOS(.v10)
   ],
 

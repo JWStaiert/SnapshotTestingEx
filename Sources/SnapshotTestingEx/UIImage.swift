@@ -12,14 +12,14 @@ import XCTest
 
 extension Diffing where Value == UIImage {
 
-  /// A pixel-diffing strategy for NSImage's which requires a exact match.
+  /// A pixel-diffing strategy for UIImages which requires an exact match.
   public static let imageEx = Diffing.imageEx(
     maxAbsoluteComponentDifference: 0.0,
     maxAverageAbsoluteComponentDifference: 0.0,
     scale: 0.0
   )
 
-  /// A pixel-diffing strategy for NSImage that allows customizing how precise
+  /// A pixel-diffing strategy for UIImage that allows customizing how precise
   /// the matching must be.
   ///
   /// - Parameter maxAbsoluteComponentDifference: A value between 0 and positive
@@ -81,7 +81,7 @@ extension Diffing where Value == UIImage {
 
 extension Snapshotting where Value == UIImage, Format == UIImage {
 
-  /// A snapshot strategy for comparing images based on pixel equality.
+  /// A snapshot strategy for comparing UIImages based on pixel equality.
   public static var imageEx: Snapshotting {
     return .imageEx(
       maxAbsoluteComponentDifference: 0.0,
@@ -90,7 +90,7 @@ extension Snapshotting where Value == UIImage, Format == UIImage {
     )
   }
 
-  /// A snapshot strategy for comparing images based on pixel equality.
+  /// A snapshot strategy for comparing UIImages based on pixel equality.
   ///
   /// - Parameter maxAbsoluteComponentDifference: A value between 0 and positive
   /// infinity, where 0 means each component of every pixel must match exactly.
@@ -163,23 +163,7 @@ private func compare(
   )
 }
 
-private func context(for cgImage: CGImage) -> CGContext? {
-  guard
-    let space = cgImage.colorSpace,
-    let context = CGContext(
-      data:               nil,
-      width:              cgImage.width,
-      height:             cgImage.height,
-      bitsPerComponent:   cgImage.bitsPerComponent,
-      bytesPerRow:        cgImage.width * 4,
-      space:              space,
-      bitmapInfo:         CGImageAlphaInfo.premultipliedLast.rawValue
-    )
-  else { return nil }
-  context.draw(cgImage, in: CGRect(x: 0, y: 0, width: cgImage.width, height: cgImage.height))
-  return context
-}
-
+#warning("Function uiImageDiff accounts for roughly 75% of the runtime of failed tests.")
 private func uiImageDiff(_ old: UIImage, _ new: UIImage) -> UIImage {
   let width = max(old.size.width, new.size.width)
   let height = max(old.size.height, new.size.height)

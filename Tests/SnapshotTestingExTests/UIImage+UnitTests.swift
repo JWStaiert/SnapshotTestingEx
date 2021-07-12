@@ -11,7 +11,22 @@ import XCTest
 
 final class UIImage_UnitTests: XCTestCase {
 
-  func testUIImageFuzzyExact() {
+  #if os(iOS) || os(tvOS)
+  static var arrow: UIImage!
+  static var arrowOffByOne: UIImage!
+  static var largeArrow: UIImage!
+  static var largeArrowOffByOne: UIImage!
+
+  override class func setUp() {
+
+    Self.arrow = UIImage.arrow
+    Self.arrowOffByOne = UIImage.arrowOffByOne
+    Self.largeArrow = UIImage.largeArrow
+    Self.largeArrowOffByOne = UIImage.largeArrowOffByOne
+  }
+  #endif
+
+  func testUIImageExExact() {
     #if os(iOS) || os(tvOS)
 
     let osName: String
@@ -22,12 +37,23 @@ final class UIImage_UnitTests: XCTestCase {
     #endif
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(matching: UIImage.arrow, as: .imageEx(maxAbsoluteComponentDifference: 0.0, maxAverageAbsoluteComponentDifference: 0.0, scale: nil), named: osName)
+      assertSnapshot(
+        matching: Self.arrow,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: 0.0,
+          maxAverageAbsoluteComponentDifference: 0.0,
+          scale: nil
+        ),
+        named: osName
+      )
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 
-  func testUIImageFuzzyComponentFail() {
+  func testUIImageExComponentFail() {
     #if os(iOS) || os(tvOS)
 
     let osName: String
@@ -40,12 +66,23 @@ final class UIImage_UnitTests: XCTestCase {
     XCTExpectFailure()
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(matching: UIImage.arrowOffByOne, as: .imageEx(maxAbsoluteComponentDifference: 1.0.nextDown, maxAverageAbsoluteComponentDifference: Double.infinity, scale: nil), named: osName)
+      assertSnapshot(
+        matching: Self.arrowOffByOne,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: 1.0.nextDown,
+          maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+          scale: nil
+        ),
+        named: osName
+      )
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 
-  func testUIImageFuzzyComponent() {
+  func testUIImageExComponent() {
     #if os(iOS) || os(tvOS)
 
     let osName: String
@@ -56,12 +93,23 @@ final class UIImage_UnitTests: XCTestCase {
     #endif
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(matching: UIImage.arrowOffByOne, as: .imageEx(maxAbsoluteComponentDifference: 1.0, maxAverageAbsoluteComponentDifference: Double.infinity, scale: nil), named: osName)
+      assertSnapshot(
+        matching: Self.arrowOffByOne,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: 1.0,
+          maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+          scale: nil
+        ),
+        named: osName
+      )
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 
-  func testUIImageFuzzyAverageOffFail() {
+  func testUIImageExAverageFail() {
     #if os(iOS) || os(tvOS)
 
     let osName: String
@@ -74,12 +122,23 @@ final class UIImage_UnitTests: XCTestCase {
     XCTExpectFailure()
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(matching: UIImage.arrowOffByOne, as: .imageEx(maxAbsoluteComponentDifference: Double.infinity, maxAverageAbsoluteComponentDifference: 1.0.nextDown, scale: nil), named: osName)
+      assertSnapshot(
+        matching: Self.arrowOffByOne,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+          maxAverageAbsoluteComponentDifference: 1.0.nextDown,
+          scale: nil
+        ),
+        named: osName
+      )
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 
-  func testUIImageFuzzyAverage() {
+  func testUIImageExAverage() {
     #if os(iOS) || os(tvOS)
 
     let osName: String
@@ -90,76 +149,250 @@ final class UIImage_UnitTests: XCTestCase {
     #endif
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(matching: UIImage.arrowOffByOne, as: .imageEx(maxAbsoluteComponentDifference: Double.infinity, maxAverageAbsoluteComponentDifference: 2.0, scale: nil), named: osName)
+      assertSnapshot(
+        matching: Self.arrowOffByOne,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+          maxAverageAbsoluteComponentDifference: 1.0,
+          scale: nil
+        ),
+        named: osName
+      )
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 
   func testUIImagePerformance() {
     #if os(iOS) || os(tvOS)
 
+    let osName: String
+    #if os(iOS)
+    osName = "iOS"
+    #elseif os(tvOS)
+    osName = "tvOS"
+    #endif
+
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
-        assertSnapshot(matching: UIImage.largeArrow, as: .image, named: "perf")
+        assertSnapshot(
+          matching: Self.largeArrow,
+          as: .image,
+          named: osName
+        )
       }
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 
   func testUIImageOffByOnePerformance() {
     #if os(iOS) || os(tvOS)
 
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      measure {
-        assertSnapshot(matching: UIImage.largeArrowOffByOne, as: .image(precision: 0.0, scale: nil), named: "perf")
-      }
-    }
+    let osName: String
+    #if os(iOS)
+    osName = "iOS"
+    #elseif os(tvOS)
+    osName = "tvOS"
     #endif
-  }
-
-  func testUIImageFuzzyExactPerformance() {
-    #if os(iOS) || os(tvOS)
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
-        assertSnapshot(matching: UIImage.largeArrow, as: .imageEx(maxAbsoluteComponentDifference: 0.0, maxAverageAbsoluteComponentDifference: 0.0, scale: nil), named: "perf")
+        assertSnapshot(
+          matching: Self.largeArrowOffByOne,
+          as: .image(
+            precision: 0.0,
+            scale: nil
+          ),
+          named: osName
+        )
       }
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 
-  func testUIImageFuzzyExactOffByOnePerformance() {
+  func testUIImageExExactPerformance() {
     #if os(iOS) || os(tvOS)
+
+    let osName: String
+    #if os(iOS)
+    osName = "iOS"
+    #elseif os(tvOS)
+    osName = "tvOS"
+    #endif
+
+    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      measure {
+        assertSnapshot(
+          matching: Self.largeArrow,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: 0.0,
+            maxAverageAbsoluteComponentDifference: 0.0,
+            scale: nil
+          ),
+          named: osName
+        )
+      }
+    }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
+    #endif
+  }
+
+  func testUIImageExExactOffByOnePerformance() {
+    #if os(iOS) || os(tvOS)
+
+    let osName: String
+    #if os(iOS)
+    osName = "iOS"
+    #elseif os(tvOS)
+    osName = "tvOS"
+    #endif
+
+    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      measure {
+        assertSnapshot(
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            scale: nil
+          ),
+          named: osName
+        )
+      }
+    }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
+    #endif
+  }
+
+  func testUIImageExComponentFailPerformance() {
+    #if os(iOS) || os(tvOS)
+
+    let osName: String
+    #if os(iOS)
+    osName = "iOS"
+    #elseif os(tvOS)
+    osName = "tvOS"
+    #endif
 
     XCTExpectFailure()
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
-        assertSnapshot(matching: UIImage.largeArrowOffByOne, as: .imageEx(maxAbsoluteComponentDifference: 0.0, maxAverageAbsoluteComponentDifference: 0.0, scale: nil), named: "perf")
+        assertSnapshot(
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: 1.0.nextDown,
+            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            scale: nil
+          ),
+          named: osName
+        )
       }
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 
-  func testUIImageFuzzyComponentPerformance() {
+  func testUIImageExComponentPerformance() {
     #if os(iOS) || os(tvOS)
+
+    let osName: String
+    #if os(iOS)
+    osName = "iOS"
+    #elseif os(tvOS)
+    osName = "tvOS"
+    #endif
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
-        assertSnapshot(matching: UIImage.largeArrowOffByOne, as: .imageEx(maxAbsoluteComponentDifference: 1.0, maxAverageAbsoluteComponentDifference: Double.infinity, scale: nil), named: "perf")
+        assertSnapshot(
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: 1.0,
+            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            scale: nil
+          ),
+          named: osName
+        )
       }
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 
-  func testUIImageFuzzyAveragePerformance() {
+  func testUIImageExAverageFailPerformance() {
     #if os(iOS) || os(tvOS)
+
+    let osName: String
+    #if os(iOS)
+    osName = "iOS"
+    #elseif os(tvOS)
+    osName = "tvOS"
+    #endif
+
+    XCTExpectFailure()
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
-        assertSnapshot(matching: UIImage.largeArrowOffByOne, as: .imageEx(maxAbsoluteComponentDifference: Double.infinity, maxAverageAbsoluteComponentDifference: 2.0, scale: nil), named: "perf")
+        assertSnapshot(
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            maxAverageAbsoluteComponentDifference: 1.0.nextDown,
+            scale: nil
+          ),
+          named: osName
+        )
       }
     }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
+    #endif
+  }
+
+  func testUIImageExAveragePerformance() {
+    #if os(iOS) || os(tvOS)
+
+    let osName: String
+    #if os(iOS)
+    osName = "iOS"
+    #elseif os(tvOS)
+    osName = "tvOS"
+    #endif
+
+    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      measure {
+        assertSnapshot(
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            maxAverageAbsoluteComponentDifference: 1.0,
+            scale: nil
+          ),
+          named: osName
+        )
+      }
+    }
+    #else
+    XCTExpectFailure()
+    XCTFail("Test not valid for this target.")
     #endif
   }
 }

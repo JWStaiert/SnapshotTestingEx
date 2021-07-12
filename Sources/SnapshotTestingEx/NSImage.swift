@@ -12,7 +12,7 @@ import XCTest
 
 extension Diffing where Value == NSImage {
 
-  /// A pixel-diffing strategy for NSImage's which requires a exact match.
+  /// A pixel-diffing strategy for NSImages which requires a exact match.
   public static let imageEx = Diffing.imageEx(
     maxAbsoluteComponentDifference: 0.0,
     maxAverageAbsoluteComponentDifference: 0.0
@@ -45,8 +45,7 @@ extension Diffing where Value == NSImage {
         return nil
       }
 
-      //let difference = nsImageDiff(old, new)
-      let difference = old
+      let difference = nsImageDiff(old, new)
 
       let message = new.size == old.size
         ? "Newly-taken snapshot does not match reference. \(result.message)"
@@ -61,7 +60,7 @@ extension Diffing where Value == NSImage {
 
 extension Snapshotting where Value == NSImage, Format == NSImage {
 
-  /// A snapshot strategy for comparing images based on pixel equality.
+  /// A snapshot strategy for comparing NSImages based on pixel equality.
   public static var imageEx: Snapshotting {
     return .imageEx(
       maxAbsoluteComponentDifference: 0.0,
@@ -69,7 +68,7 @@ extension Snapshotting where Value == NSImage, Format == NSImage {
     )
   }
 
-  /// A snapshot strategy for comparing images based on pixel equality.
+  /// A snapshot strategy for comparing NSImages based on pixel equality.
   ///
   /// - Parameter maxAbsoluteComponentDifference: A value between 0 and positive
   /// infinity, where 0 means each component of every pixel must match exactly.
@@ -147,24 +146,7 @@ private func compare(
   )
 }
 
-private func context(for cgImage: CGImage) -> CGContext? {
-  guard
-    let space = cgImage.colorSpace,
-    let context = CGContext(
-      data: nil,
-      width: cgImage.width,
-      height: cgImage.height,
-      bitsPerComponent: cgImage.bitsPerComponent,
-      bytesPerRow: cgImage.bytesPerRow,
-      space: space,
-      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-    )
-  else { return nil }
-
-  context.draw(cgImage, in: CGRect(x: 0, y: 0, width: cgImage.width, height: cgImage.height))
-  return context
-}
-
+#warning("Function nsImageDiff accounts for roughly 75% of the runtime of failed tests.")
 private func nsImageDiff(_ old: NSImage, _ new: NSImage) -> NSImage {
   let oldCiImage = CIImage(cgImage: old.cgImage(forProposedRect: nil, context: nil, hints: nil)!)
   let newCiImage = CIImage(cgImage: new.cgImage(forProposedRect: nil, context: nil, hints: nil)!)

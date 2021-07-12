@@ -1,6 +1,6 @@
-//  SnapshotTestingExTests/NSImage+UnitTests.swift
+//  SnapshotTestingExTests/CGContext+UnitTests.swift
 //
-//  Created by Jason William Staiert on 7/6/21.
+//  Created by Jason William Staiert on 7/12/21.
 //
 //  Copyright © 2021 by Jason William Staiert. All Rights Reserved.
 
@@ -9,25 +9,39 @@ import SnapshotTestingEx
 import SnapshotTesting
 import XCTest
 
-final class NSImage_UnitTests: XCTestCase {
+final class CGContext_UnitTests: XCTestCase {
 
-  #if os(macOS)
-  static var arrow: NSImage!
-  static var arrowOffByOne: NSImage!
-  static var largeArrow: NSImage!
-  static var largeArrowOffByOne: NSImage!
+  static var arrow: CGContext!
+  static var arrowOffByOne: CGContext!
+  static var largeArrow: CGContext!
+  static var largeArrowOffByOne: CGContext!
+
+  class func context(for cgImage: CGImage) -> CGContext? {
+    guard
+      let space = cgImage.colorSpace,
+      let context = CGContext(
+        data:               nil,
+        width:              cgImage.width,
+        height:             cgImage.height,
+        bitsPerComponent:   cgImage.bitsPerComponent,
+        bytesPerRow:        cgImage.width * 4,
+        space:              space,
+        bitmapInfo:         CGImageAlphaInfo.premultipliedLast.rawValue
+      )
+    else { return nil }
+    context.draw(cgImage, in: CGRect(x: 0, y: 0, width: cgImage.width, height: cgImage.height))
+    return context
+  }
 
   override class func setUp() {
 
-    Self.arrow = NSImage.arrow
-    Self.arrowOffByOne = NSImage.arrowOffByOne
-    Self.largeArrow = NSImage.largeArrow
-    Self.largeArrowOffByOne = NSImage.largeArrowOffByOne
+    Self.arrow = context(for: CGImage.arrow)
+    Self.arrowOffByOne = context(for: CGImage.arrowOffByOne)
+    Self.largeArrow = context(for: CGImage.largeArrow)
+    Self.largeArrowOffByOne = context(for: CGImage.largeArrowOffByOne)
   }
-  #endif
 
-  func testNSImageExExact() {
-    #if os(macOS)
+  func testCGContextExExact() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       assertSnapshot(
@@ -38,14 +52,9 @@ final class NSImage_UnitTests: XCTestCase {
         )
       )
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImageExComponentFail() {
-    #if os(macOS)
+  func testCGContextExComponentFail() {
 
     XCTExpectFailure()
 
@@ -58,14 +67,9 @@ final class NSImage_UnitTests: XCTestCase {
         )
       )
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImageExComponent() {
-    #if os(macOS)
+  func testCGContextExComponent() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       assertSnapshot(
@@ -76,14 +80,9 @@ final class NSImage_UnitTests: XCTestCase {
         )
       )
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImageExAverageFail() {
-    #if os(macOS)
+  func testCGContextExAverageFail() {
 
     XCTExpectFailure()
 
@@ -96,14 +95,9 @@ final class NSImage_UnitTests: XCTestCase {
         )
       )
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImageExAverage() {
-    #if os(macOS)
+  func testCGContextExAverage() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       assertSnapshot(
@@ -114,52 +108,9 @@ final class NSImage_UnitTests: XCTestCase {
         )
       )
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImagePerformance() {
-    #if os(macOS)
-
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      measure {
-        assertSnapshot(
-          matching: Self.largeArrow,
-          as: .image,
-          named: "perf"
-        )
-      }
-    }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
-  }
-
-  func testNSImageOffByOnePerformance() {
-    #if os(macOS)
-
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      measure {
-        assertSnapshot(
-          matching: Self.largeArrowOffByOne,
-          as: .image(
-            precision: 0.0
-          ),
-          named: "perf"
-        )
-      }
-    }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
-  }
-
-  func testNSImageExExactPerformance() {
-    #if os(macOS)
+  func testCGContextExExactPerformance() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
@@ -173,14 +124,9 @@ final class NSImage_UnitTests: XCTestCase {
         )
       }
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImageExExactOffByOnePerformance() {
-    #if os(macOS)
+  func testCGContextExExactOffByOnePerformance() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
@@ -194,14 +140,9 @@ final class NSImage_UnitTests: XCTestCase {
         )
       }
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImageExComponentFailPerformance() {
-    #if os(macOS)
+  func testCGContextExComponentFailPerformance() {
 
     XCTExpectFailure()
 
@@ -217,14 +158,9 @@ final class NSImage_UnitTests: XCTestCase {
         )
       }
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImageExComponentPerformance() {
-    #if os(macOS)
+  func testCGContextExComponentPerformance() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
@@ -233,18 +169,14 @@ final class NSImage_UnitTests: XCTestCase {
           as: .imageEx(
             maxAbsoluteComponentDifference: 1.0,
             maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
-          ), named: "perf"
+          ),
+          named: "perf"
         )
       }
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImageExAverageFailPerformance() {
-    #if os(macOS)
+  func testCGContextExAverageFailPerformance() {
 
     XCTExpectFailure()
 
@@ -260,14 +192,9 @@ final class NSImage_UnitTests: XCTestCase {
         )
       }
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 
-  func testNSImageExAveragePerformance() {
-    #if os(macOS)
+  func testCGContextExAveragePerformance() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
@@ -281,9 +208,5 @@ final class NSImage_UnitTests: XCTestCase {
         )
       }
     }
-    #else
-    XCTExpectFailure()
-    XCTFail("Test not valid for this target.")
-    #endif
   }
 }

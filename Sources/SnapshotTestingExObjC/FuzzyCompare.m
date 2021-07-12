@@ -62,16 +62,33 @@ _compareUInt8(
         if (absoluteComponentDifference > maxAbsoluteComponentDifference)
         {
           maxAbsoluteComponentDifferenceExceeded = true;
+
+          break;
         }
 
         absoluteComponentDifferenceSum += absoluteComponentDifference;
 
         componentCount += 1.0;
       }
+
+      if (maxAbsoluteComponentDifferenceExceeded)
+      {
+        break;
+      }
+    }
+
+    if (maxAbsoluteComponentDifferenceExceeded)
+    {
+      break;
     }
   }
 
-  double averageAbsoluteDifferencePerComponent = absoluteComponentDifferenceSum / componentCount;
+  double averageAbsoluteDifferencePerComponent = DBL_MAX;
+
+  if (!maxAbsoluteComponentDifferenceExceeded)
+  {
+    averageAbsoluteDifferencePerComponent = absoluteComponentDifferenceSum / componentCount;
+  }
 
   struct _CompareResult result = { maxAbsoluteComponentDifferenceExceeded, averageAbsoluteDifferencePerComponent };
 
@@ -130,16 +147,33 @@ _compareUInt16(
         if (absoluteComponentDifference > maxAbsoluteComponentDifference)
         {
           maxAbsoluteComponentDifferenceExceeded = true;
+
+          break;
         }
 
         absoluteComponentDifferenceSum += absoluteComponentDifference;
 
         componentCount += 1.0;
       }
+
+      if (maxAbsoluteComponentDifferenceExceeded)
+      {
+        break;
+      }
+    }
+
+    if (maxAbsoluteComponentDifferenceExceeded)
+    {
+      break;
     }
   }
 
-  double averageAbsoluteDifferencePerComponent = absoluteComponentDifferenceSum / componentCount;
+  double averageAbsoluteDifferencePerComponent = DBL_MAX;
+
+  if (!maxAbsoluteComponentDifferenceExceeded)
+  {
+    averageAbsoluteDifferencePerComponent = absoluteComponentDifferenceSum / componentCount;
+  }
 
   struct _CompareResult result = { maxAbsoluteComponentDifferenceExceeded, averageAbsoluteDifferencePerComponent };
 
@@ -198,16 +232,33 @@ _compareFloat32(
         if (absoluteComponentDifference > maxAbsoluteComponentDifference)
         {
           maxAbsoluteComponentDifferenceExceeded = true;
+
+          break;
         }
 
         absoluteComponentDifferenceSum += absoluteComponentDifference;
 
         componentCount += 1.0;
       }
+
+      if (maxAbsoluteComponentDifferenceExceeded)
+      {
+        break;
+      }
+    }
+
+    if (maxAbsoluteComponentDifferenceExceeded)
+    {
+      break;
     }
   }
 
-  double averageAbsoluteDifferencePerComponent = (double)absoluteComponentDifferenceSum / (double)componentCount;
+  double averageAbsoluteDifferencePerComponent = DBL_MAX;
+
+  if (!maxAbsoluteComponentDifferenceExceeded)
+  {
+    averageAbsoluteDifferencePerComponent = absoluteComponentDifferenceSum / componentCount;
+  }
 
   struct _CompareResult result = { maxAbsoluteComponentDifferenceExceeded, averageAbsoluteDifferencePerComponent };
 

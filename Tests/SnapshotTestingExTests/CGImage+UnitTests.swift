@@ -11,156 +11,185 @@ import XCTest
 
 final class CGImage_UnitTests: XCTestCase {
 
-  func testCGImageFuzzyExact() {
-    #if os(macOS)
+  static var arrow: CGImage!
+  static var arrowOffByOne: CGImage!
+  static var largeArrow: CGImage!
+  static var largeArrowOffByOne: CGImage!
+
+  override class func setUp() {
+
+    Self.arrow = CGImage.arrow
+    Self.arrowOffByOne = CGImage.arrowOffByOne
+    Self.largeArrow = CGImage.largeArrow
+    Self.largeArrowOffByOne = CGImage.largeArrowOffByOne
+  }
+
+  func testCGImageExExact() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
         assertSnapshot(
-          matching: CGImage.arrow,
-          as: .imageEx(maxAbsoluteComponentDifference: 0.0,
-                       maxAverageAbsoluteComponentDifference: 0.0)
+          matching: Self.arrow,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: 0.0,
+            maxAverageAbsoluteComponentDifference: 0.0
+          )
         )
     }
-    #endif
   }
 
-  func testCGImageFuzzyComponentFail() {
-    #if os(macOS)
+  func testCGImageExComponentFail() {
 
     XCTExpectFailure()
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
         assertSnapshot(
-          matching: CGImage.arrowOffByOne,
-          as: .imageEx(maxAbsoluteComponentDifference: 1.0.nextDown,
-                       maxAverageAbsoluteComponentDifference: Double.infinity)
+          matching: Self.arrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: 1.0.nextDown,
+            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
+          )
         )
     }
-    #endif
   }
 
-  func testCGImageFuzzyComponent() {
-    #if os(macOS)
+  func testCGImageExComponent() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
         assertSnapshot(
-          matching: CGImage.arrowOffByOne,
-          as: .imageEx(maxAbsoluteComponentDifference: 1.0,
-                       maxAverageAbsoluteComponentDifference: Double.infinity)
+          matching: Self.arrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: 1.0,
+            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
+          )
         )
     }
-    #endif
   }
 
-  func testCGImageFuzzyAverageFail() {
-    #if os(macOS)
+  func testCGImageExAverageFail() {
 
     XCTExpectFailure()
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
         assertSnapshot(
-          matching: CGImage.arrowOffByOne,
-          as: .imageEx(maxAbsoluteComponentDifference: Double.infinity,
-                       maxAverageAbsoluteComponentDifference: 1.0.nextDown)
+          matching: Self.arrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            maxAverageAbsoluteComponentDifference: 1.0.nextDown
+          )
         )
     }
-    #endif
   }
 
-  func testCGImageFuzzyAverage() {
-    #if os(macOS)
+  func testCGImageExAverage() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
         assertSnapshot(
-          matching: CGImage.arrowOffByOne,
-          as: .imageEx(maxAbsoluteComponentDifference: Double.infinity,
-                       maxAverageAbsoluteComponentDifference: 1.0)
+          matching: Self.arrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            maxAverageAbsoluteComponentDifference: 1.0
+          )
         )
     }
-    #endif
   }
 
-  func testCGImageFuzzyExactPerformance() {
-    #if os(macOS)
-
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      measure {
-        assertSnapshot(
-          matching: CGImage.largeArrow,
-          as: .imageEx(maxAbsoluteComponentDifference: 0.0,
-                       maxAverageAbsoluteComponentDifference: 0.0),
-          named: "perf"
-        )
-      }
-    }
-    #endif
-  }
-
-  func testCGImageFuzzyComponentFailPerformance() {
-    #if os(macOS)
-
-    XCTExpectFailure()
+  func testCGImageExExactPerformance() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
-          matching: CGImage.largeArrowOffByOne,
-          as: .imageEx(maxAbsoluteComponentDifference: 1.0.nextDown,
-                       maxAverageAbsoluteComponentDifference: Double.infinity),
+          matching: Self.largeArrow,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: 0.0,
+            maxAverageAbsoluteComponentDifference: 0.0
+          ),
           named: "perf"
         )
       }
     }
-    #endif
   }
 
-  func testCGImageFuzzyComponentPerformance() {
-    #if os(macOS)
+  func testCGImageExExactOffByOnePerformance() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
-          matching: CGImage.largeArrowOffByOne,
-          as: .imageEx(maxAbsoluteComponentDifference: 1.0,
-                       maxAverageAbsoluteComponentDifference: Double.infinity),
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
+          ),
           named: "perf"
         )
       }
     }
-    #endif
   }
 
-  func testCGImageFuzzyAverageFailPerformance() {
-    #if os(macOS)
+  func testCGImageExComponentFailPerformance() {
 
     XCTExpectFailure()
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
-          matching: CGImage.largeArrowOffByOne,
-          as: .imageEx(maxAbsoluteComponentDifference: Double.infinity,
-                       maxAverageAbsoluteComponentDifference: 1.0.nextDown),
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: 1.0.nextDown,
+            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
+          ),
           named: "perf"
         )
       }
     }
-    #endif
   }
 
-  func testCGImageFuzzyAveragePerformance() {
-    #if os(macOS)
+  func testCGImageExComponentPerformance() {
 
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
-          matching: CGImage.largeArrowOffByOne,
-          as: .imageEx(maxAbsoluteComponentDifference: Double.infinity,
-                       maxAverageAbsoluteComponentDifference: 1.0),
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: 1.0,
+            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
+          ),
           named: "perf"
         )
       }
     }
-    #endif
+  }
+
+  func testCGImageExAverageFailPerformance() {
+
+    XCTExpectFailure()
+
+    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      measure {
+        assertSnapshot(
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            maxAverageAbsoluteComponentDifference: 1.0.nextDown
+          ),
+          named: "perf"
+        )
+      }
+    }
+  }
+
+  func testCGImageExAveragePerformance() {
+
+    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      measure {
+        assertSnapshot(
+          matching: Self.largeArrowOffByOne,
+          as: .imageEx(
+            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+            maxAverageAbsoluteComponentDifference: 1.0
+          ),
+          named: "perf"
+        )
+      }
+    }
   }
 }

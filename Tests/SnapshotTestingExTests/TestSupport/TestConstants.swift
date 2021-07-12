@@ -80,7 +80,7 @@ extension CGPath {
 extension CGImage {
 
   /// Creates an approximation of a arrow at a 45º angle with a circle above.
-  static var arrow: CGImage {
+  static var _arrow: CGImage {
     let space = CGColorSpace(name: CGColorSpace.sRGB)!
     let context = CGContext(
       data:               nil,
@@ -98,10 +98,12 @@ extension CGImage {
     context.drawPath(using: .fill)
     return context.makeImage()!
   }
+  static let arrow: CGImage = _arrow
+
 
   /// Creates an approximation of a arrow at a 45º angle with a circle above
   /// with each component values off-by=one when compared to reference image.
-  static var arrowOffByOne: CGImage {
+  static var _arrowOffByOne: CGImage {
     let bytesPerRow = smallDimension * 4
     let dataCount = smallDimension * bytesPerRow
     let data = UnsafeMutablePointer<UInt8>.allocate(capacity: dataCount)
@@ -135,9 +137,10 @@ extension CGImage {
 
     return context.makeImage()!
   }
+  static let arrowOffByOne: CGImage = _arrowOffByOne
 
   /// Creates an approximation of a arrow at a 45º angle with a circle above.
-  static var largeArrow: CGImage {
+  static var _largeArrow: CGImage {
     let space = CGColorSpace(name: CGColorSpace.sRGB)!
     let context = CGContext(
       data:               nil,
@@ -155,10 +158,11 @@ extension CGImage {
     context.drawPath(using: .fill)
     return context.makeImage()!
   }
+  static let largeArrow: CGImage = _largeArrow
 
   /// Creates an approximation of a arrow at a 45º angle with a circle above
   /// with each component values off-by=one when compared to reference image.
-  static var largeArrowOffByOne: CGImage {
+  static var _largeArrowOffByOne: CGImage {
     let bytesPerRow = largeDimension * 4
     let dataCount = largeDimension * bytesPerRow
     let data = UnsafeMutablePointer<UInt8>.allocate(capacity: dataCount)
@@ -192,6 +196,7 @@ extension CGImage {
 
     return context.makeImage()!
   }
+  static let largeArrowOffByOne: CGImage = _largeArrowOffByOne
 }
 #endif
 
@@ -199,30 +204,34 @@ extension CGImage {
 extension NSImage {
 
   /// Creates an approximation of a arrow at a 45º angle with a circle above.
-  static var arrow: NSImage {
+  static var _arrow: NSImage {
 
     return NSImage(cgImage: CGImage.arrow, size: NSZeroSize)
   }
+  static let arrow: NSImage = _arrow
 
   /// Creates an approximation of a arrow at a 45º angle with a circle above
   /// with each component values off-by-one when compared to reference image.
-  static var arrowOffByOne: NSImage {
+  static var _arrowOffByOne: NSImage {
 
     return NSImage(cgImage: CGImage.arrowOffByOne, size: NSZeroSize)
   }
+  static let arrowOffByOne: NSImage = _arrowOffByOne
 
   /// Creates an approximation of a arrow at a 45º angle with a circle above.
-  static var largeArrow: NSImage {
+  static var _largeArrow: NSImage {
 
     return NSImage(cgImage: CGImage.largeArrow, size: NSZeroSize)
   }
+  static let largeArrow: NSImage = _largeArrow
 
   /// Creates an approximation of a arrow at a 45º angle with a circle above
   /// with each component values off-by-one when compared to reference image.
-  static var largeArrowOffByOne: NSImage {
+  static var _largeArrowOffByOne: NSImage {
 
     return NSImage(cgImage: CGImage.largeArrowOffByOne, size: NSZeroSize)
   }
+  static let largeArrowOffByOne: NSImage = _largeArrowOffByOne
 }
 #endif
 

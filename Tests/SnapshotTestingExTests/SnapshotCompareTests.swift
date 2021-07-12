@@ -486,7 +486,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context,
-          maxAbsoluteComponentDifference: 0,
+          maxAbsoluteComponentDifference: 0.0,
           maxAverageAbsoluteComponentDifference: 0.0
         )
 
@@ -497,7 +497,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_identical,
-          maxAbsoluteComponentDifference: 0,
+          maxAbsoluteComponentDifference: 0.0,
           maxAverageAbsoluteComponentDifference: 0.0
         )
 
@@ -508,7 +508,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context_identical,
           b: vars.context,
-          maxAbsoluteComponentDifference: 0,
+          maxAbsoluteComponentDifference: 0.0,
           maxAverageAbsoluteComponentDifference: 0.0
         )
 
@@ -519,7 +519,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_excessBytesPerRow,
-          maxAbsoluteComponentDifference: 0,
+          maxAbsoluteComponentDifference: 0.0,
           maxAverageAbsoluteComponentDifference: 0.0
         )
 
@@ -530,7 +530,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context_excessBytesPerRow,
           b: vars.context,
-          maxAbsoluteComponentDifference: 0,
+          maxAbsoluteComponentDifference: 0.0,
           maxAverageAbsoluteComponentDifference: 0.0
         )
 
@@ -543,7 +543,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_offByOne,
-          maxAbsoluteComponentDifference: 0,
+          maxAbsoluteComponentDifference: 1.0.nextDown,
           maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
 
@@ -554,7 +554,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_offByOne,
-          maxAbsoluteComponentDifference: 1,
+          maxAbsoluteComponentDifference: 1.0,
           maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
 
@@ -565,7 +565,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_offByOne,
-          maxAbsoluteComponentDifference: Double.infinity,
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
           maxAverageAbsoluteComponentDifference: 1.0.nextDown
         )
 
@@ -576,7 +576,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_offByOne,
-          maxAbsoluteComponentDifference: Double.infinity,
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
           maxAverageAbsoluteComponentDifference: 1.0
         )
 
@@ -589,7 +589,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_offByTwo,
-          maxAbsoluteComponentDifference: 1,
+          maxAbsoluteComponentDifference: 2.0.nextDown,
           maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
 
@@ -600,7 +600,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_offByTwo,
-          maxAbsoluteComponentDifference: 2,
+          maxAbsoluteComponentDifference: 2.0,
           maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
 
@@ -611,7 +611,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_offByTwo,
-          maxAbsoluteComponentDifference: Double.infinity,
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
           maxAverageAbsoluteComponentDifference: 2.0.nextDown
         )
 
@@ -622,7 +622,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_offByTwo,
-          maxAbsoluteComponentDifference: Double.infinity,
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
           maxAverageAbsoluteComponentDifference: 2.0
         )
 
@@ -635,7 +635,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_differentColorSpace,
-          maxAbsoluteComponentDifference: Double.infinity,
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
           maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
 
@@ -646,7 +646,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_differentBitmapInfo,
-          maxAbsoluteComponentDifference: Double.infinity,
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
           maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
 
@@ -657,7 +657,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_differentWidth,
-          maxAbsoluteComponentDifference: Double.infinity,
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
           maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
 
@@ -668,7 +668,7 @@ final class SnapshotCompareTests: XCTestCase {
         let result = _compare(
           a: vars.context,
           b: vars.context_differentHeight,
-          maxAbsoluteComponentDifference: Double.infinity,
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
           maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
 
@@ -706,7 +706,7 @@ final class SnapshotCompareTests: XCTestCase {
           let result = _compare(
             a: vars.context_bitmapInfo_noneSkipFirst,
             b: vars.context_offByOne_bitmapInfo_noneSkipFirst,
-            maxAbsoluteComponentDifference: Double.infinity,
+            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
             maxAverageAbsoluteComponentDifference: 0.0
           )
 

@@ -8,7 +8,7 @@ import CoreGraphics
 import SnapshotTesting
 import XCTest
 
-fileprivate extension CGImage {
+internal extension CGImage {
   var size: Int {
     get {
       return self.bytesPerRow * self.height
@@ -18,13 +18,13 @@ fileprivate extension CGImage {
 
 extension Diffing where Value == CGImage {
 
-  /// A pixel-diffing strategy for NSImage's which requires a exact match.
+  /// A pixel-diffing strategy for CGImages which requires an exact match.
   public static let imageEx = Diffing.imageEx(
     maxAbsoluteComponentDifference: 0.0,
     maxAverageAbsoluteComponentDifference: 0.0
   )
 
-  /// A pixel-diffing strategy for NSImage that allows customizing how precise
+  /// A pixel-diffing strategy for CGImage that allows customizing how precise
   /// the matching must be.
   ///
   /// - Parameter maxAbsoluteComponentDifference: A value between 0 and positive
@@ -71,7 +71,7 @@ extension Diffing where Value == CGImage {
 
 extension Snapshotting where Value == CGImage, Format == CGImage {
 
-  /// A snapshot strategy for comparing images based on pixel equality.
+  /// A snapshot strategy for comparing CGImages based on pixel equality.
   public static var imageEx: Snapshotting {
     return .imageEx(
       maxAbsoluteComponentDifference: 0.0,
@@ -79,8 +79,7 @@ extension Snapshotting where Value == CGImage, Format == CGImage {
     )
   }
 
-  /// A pixel-diffing strategy for NSImage that allows customizing how precise
-  /// the matching must be.
+  /// A snapshot strategy for comparing CGImages based on pixel equality.
   ///
   /// - Parameter maxAbsoluteComponentDifference: A value between 0 and positive
   /// infinity, where 0 means each component of every pixel must match exactly.
@@ -104,7 +103,7 @@ extension Snapshotting where Value == CGImage, Format == CGImage {
   }
 }
 
-private func ToData(_ image: CGImage) -> Data? {
+internal func ToData(_ image: CGImage) -> Data? {
   let mutableData = CFDataCreateMutable(nil, 0)!
   let destination = CGImageDestinationCreateWithData(mutableData, "public.png" as CFString, 1, nil)!
   CGImageDestinationAddImage(destination, image, nil)
@@ -115,7 +114,7 @@ private func ToData(_ image: CGImage) -> Data? {
   }
 }
 
-private func FromData(_ data: Data) -> CGImage? {
+internal func FromData(_ data: Data) -> CGImage? {
   let dataProvider = CGDataProvider(data: data as CFData)!
   let cgImage = CGImage(
     pngDataProviderSource: dataProvider,
@@ -165,7 +164,7 @@ private func compare(
   )
 }
 
-private func context(for cgImage: CGImage) -> CGContext? {
+internal func context(for cgImage: CGImage) -> CGContext? {
   guard
     let space = cgImage.colorSpace,
     let context = CGContext(
@@ -182,7 +181,8 @@ private func context(for cgImage: CGImage) -> CGContext? {
   return context
 }
 
-private func cgImageDiff(_ old: CGImage, _ new: CGImage) -> CGImage {
+#warning("Function cgImageDiff accounts for roughly 75% of the runtime of failed tests.")
+internal func cgImageDiff(_ old: CGImage, _ new: CGImage) -> CGImage {
   let oldCiImage = CIImage(cgImage: old)
   let newCiImage = CIImage(cgImage: new)
   let differenceFilter = CIFilter(name: "CIDifferenceBlendMode")!
