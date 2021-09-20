@@ -29,15 +29,13 @@ final class NSImage_UnitTests: XCTestCase {
   func testNSImageExExact() {
     #if os(macOS)
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(
-        matching: Self.arrow,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: 0.0,
-          maxAverageAbsoluteComponentDifference: 0.0
-        )
+    assertSnapshot(
+      matching: Self.arrow,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: 0.0,
+        maxAverageAbsoluteComponentDifference: 0.0
       )
-    }
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")
@@ -47,16 +45,14 @@ final class NSImage_UnitTests: XCTestCase {
   func testNSImageExComponentFail() {
     #if os(macOS)
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      XCTExpectFailure()
-      assertSnapshot(
-        matching: Self.arrowOffByOne,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: 1.0.nextDown,
-          maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
-        )
+    XCTExpectFailure()
+    assertSnapshot(
+      matching: Self.arrowOffByOne,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: 1.0.nextDown,
+        maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
       )
-    }
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")
@@ -66,15 +62,13 @@ final class NSImage_UnitTests: XCTestCase {
   func testNSImageExComponent() {
     #if os(macOS)
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(
-        matching: Self.arrowOffByOne,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: 1.0,
-          maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
-        )
+    assertSnapshot(
+      matching: Self.arrowOffByOne,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: 1.0,
+        maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
       )
-    }
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")
@@ -84,16 +78,14 @@ final class NSImage_UnitTests: XCTestCase {
   func testNSImageExAverageFail() {
     #if os(macOS)
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      XCTExpectFailure()
-      assertSnapshot(
-        matching: Self.arrowOffByOne,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
-          maxAverageAbsoluteComponentDifference: 1.0.nextDown
-        )
+    XCTExpectFailure()
+    assertSnapshot(
+      matching: Self.arrowOffByOne,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+        maxAverageAbsoluteComponentDifference: 1.0.nextDown
       )
-    }
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")
@@ -103,15 +95,13 @@ final class NSImage_UnitTests: XCTestCase {
   func testNSImageExAverage() {
     #if os(macOS)
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(
-        matching: Self.arrowOffByOne,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
-          maxAverageAbsoluteComponentDifference: 1.0
-        )
+    assertSnapshot(
+      matching: Self.arrowOffByOne,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+        maxAverageAbsoluteComponentDifference: 1.0
       )
-    }
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")

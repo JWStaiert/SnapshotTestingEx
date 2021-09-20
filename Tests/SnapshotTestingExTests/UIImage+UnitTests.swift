@@ -36,17 +36,15 @@ final class UIImage_UnitTests: XCTestCase {
     osName = "tvOS"
     #endif
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(
-        matching: Self.arrow,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: 0.0,
-          maxAverageAbsoluteComponentDifference: 0.0,
-          scale: nil
-        ),
-        named: osName
-      )
-    }
+    assertSnapshot(
+      matching: Self.arrow,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: 0.0,
+        maxAverageAbsoluteComponentDifference: 0.0,
+        scale: nil
+      ),
+      named: osName
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")
@@ -63,18 +61,16 @@ final class UIImage_UnitTests: XCTestCase {
     osName = "tvOS"
     #endif
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      XCTExpectFailure()
-      assertSnapshot(
-        matching: Self.arrowOffByOne,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: 1.0.nextDown,
-          maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
-          scale: nil
-        ),
-        named: osName
-      )
-    }
+    XCTExpectFailure()
+    assertSnapshot(
+      matching: Self.arrowOffByOne,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: 1.0.nextDown,
+        maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+        scale: nil
+      ),
+      named: osName
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")
@@ -91,17 +87,15 @@ final class UIImage_UnitTests: XCTestCase {
     osName = "tvOS"
     #endif
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(
-        matching: Self.arrowOffByOne,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: 1.0,
-          maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
-          scale: nil
-        ),
-        named: osName
-      )
-    }
+    assertSnapshot(
+      matching: Self.arrowOffByOne,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: 1.0,
+        maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+        scale: nil
+      ),
+      named: osName
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")
@@ -118,18 +112,16 @@ final class UIImage_UnitTests: XCTestCase {
     osName = "tvOS"
     #endif
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      XCTExpectFailure()
-      assertSnapshot(
-        matching: Self.arrowOffByOne,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
-          maxAverageAbsoluteComponentDifference: 1.0.nextDown,
-          scale: nil
-        ),
-        named: osName
-      )
-    }
+    XCTExpectFailure()
+    assertSnapshot(
+      matching: Self.arrowOffByOne,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+        maxAverageAbsoluteComponentDifference: 1.0.nextDown,
+        scale: nil
+      ),
+      named: osName
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")
@@ -146,17 +138,15 @@ final class UIImage_UnitTests: XCTestCase {
     osName = "tvOS"
     #endif
     
-    if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-      assertSnapshot(
-        matching: Self.arrowOffByOne,
-        as: .imageEx(
-          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
-          maxAverageAbsoluteComponentDifference: 1.0,
-          scale: nil
-        ),
-        named: osName
-      )
-    }
+    assertSnapshot(
+      matching: Self.arrowOffByOne,
+      as: .imageEx(
+        maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+        maxAverageAbsoluteComponentDifference: 1.0,
+        scale: nil
+      ),
+      named: osName
+    )
     #else
     XCTExpectFailure()
     XCTFail("Test not valid for this target.")
