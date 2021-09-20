@@ -10,32 +10,32 @@ import SnapshotTesting
 import XCTest
 
 final class UIImage_UnitTests: XCTestCase {
-
+  
   #if os(iOS) || os(tvOS)
   static var arrow: UIImage!
   static var arrowOffByOne: UIImage!
   static var largeArrow: UIImage!
   static var largeArrowOffByOne: UIImage!
-
+  
   override class func setUp() {
-
+    
     Self.arrow = UIImage.arrow
     Self.arrowOffByOne = UIImage.arrowOffByOne
     Self.largeArrow = UIImage.largeArrow
     Self.largeArrowOffByOne = UIImage.largeArrowOffByOne
   }
   #endif
-
+  
   func testUIImageExExact() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       assertSnapshot(
         matching: Self.arrow,
@@ -52,20 +52,19 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExComponentFail() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       assertSnapshot(
         matching: Self.arrowOffByOne,
         as: .imageEx(
@@ -81,17 +80,17 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExComponent() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       assertSnapshot(
         matching: Self.arrowOffByOne,
@@ -108,20 +107,19 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExAverageFail() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       assertSnapshot(
         matching: Self.arrowOffByOne,
         as: .imageEx(
@@ -137,17 +135,17 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExAverage() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       assertSnapshot(
         matching: Self.arrowOffByOne,
@@ -164,17 +162,17 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImagePerformance() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -189,17 +187,17 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageOffByOnePerformance() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -217,17 +215,17 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExExactPerformance() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -246,17 +244,17 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExExactOffByOnePerformance() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -275,20 +273,19 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExComponentFailPerformance() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       measure {
         assertSnapshot(
           matching: Self.largeArrowOffByOne,
@@ -306,17 +303,17 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExComponentPerformance() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -335,20 +332,19 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExAverageFailPerformance() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       measure {
         assertSnapshot(
           matching: Self.largeArrowOffByOne,
@@ -366,17 +362,17 @@ final class UIImage_UnitTests: XCTestCase {
     XCTFail("Test not valid for this target.")
     #endif
   }
-
+  
   func testUIImageExAveragePerformance() {
     #if os(iOS) || os(tvOS)
-
+    
     let osName: String
     #if os(iOS)
     osName = "iOS"
     #elseif os(tvOS)
     osName = "tvOS"
     #endif
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(

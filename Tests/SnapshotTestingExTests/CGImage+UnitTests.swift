@@ -10,91 +10,89 @@ import SnapshotTesting
 import XCTest
 
 final class CGImage_UnitTests: XCTestCase {
-
+  
   static var arrow: CGImage!
   static var arrowOffByOne: CGImage!
   static var largeArrow: CGImage!
   static var largeArrowOffByOne: CGImage!
-
+  
   override class func setUp() {
-
+    
     Self.arrow = CGImage.arrow
     Self.arrowOffByOne = CGImage.arrowOffByOne
     Self.largeArrow = CGImage.largeArrow
     Self.largeArrowOffByOne = CGImage.largeArrowOffByOne
   }
-
+  
   func testCGImageExExact() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-        assertSnapshot(
-          matching: Self.arrow,
-          as: .imageEx(
-            maxAbsoluteComponentDifference: 0.0,
-            maxAverageAbsoluteComponentDifference: 0.0
-          )
+      assertSnapshot(
+        matching: Self.arrow,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: 0.0,
+          maxAverageAbsoluteComponentDifference: 0.0
         )
+      )
     }
   }
-
+  
   func testCGImageExComponentFail() {
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-        assertSnapshot(
-          matching: Self.arrowOffByOne,
-          as: .imageEx(
-            maxAbsoluteComponentDifference: 1.0.nextDown,
-            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
-          )
+      XCTExpectFailure()
+      assertSnapshot(
+        matching: Self.arrowOffByOne,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: 1.0.nextDown,
+          maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
+      )
     }
   }
-
+  
   func testCGImageExComponent() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-        assertSnapshot(
-          matching: Self.arrowOffByOne,
-          as: .imageEx(
-            maxAbsoluteComponentDifference: 1.0,
-            maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
-          )
+      assertSnapshot(
+        matching: Self.arrowOffByOne,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: 1.0,
+          maxAverageAbsoluteComponentDifference: Double.greatestFiniteMagnitude
         )
+      )
     }
   }
-
+  
   func testCGImageExAverageFail() {
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-        assertSnapshot(
-          matching: Self.arrowOffByOne,
-          as: .imageEx(
-            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
-            maxAverageAbsoluteComponentDifference: 1.0.nextDown
-          )
+      XCTExpectFailure()
+      assertSnapshot(
+        matching: Self.arrowOffByOne,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+          maxAverageAbsoluteComponentDifference: 1.0.nextDown
         )
+      )
     }
   }
-
+  
   func testCGImageExAverage() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
-        assertSnapshot(
-          matching: Self.arrowOffByOne,
-          as: .imageEx(
-            maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
-            maxAverageAbsoluteComponentDifference: 1.0
-          )
+      assertSnapshot(
+        matching: Self.arrowOffByOne,
+        as: .imageEx(
+          maxAbsoluteComponentDifference: Double.greatestFiniteMagnitude,
+          maxAverageAbsoluteComponentDifference: 1.0
         )
+      )
     }
   }
-
+  
   func testCGImageExExactPerformance() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -108,9 +106,9 @@ final class CGImage_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGImageExExactOffByOnePerformance() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -124,12 +122,11 @@ final class CGImage_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGImageExComponentFailPerformance() {
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       measure {
         assertSnapshot(
           matching: Self.largeArrowOffByOne,
@@ -142,9 +139,9 @@ final class CGImage_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGImageExComponentPerformance() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -158,12 +155,11 @@ final class CGImage_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGImageExAverageFailPerformance() {
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       measure {
         assertSnapshot(
           matching: Self.largeArrowOffByOne,
@@ -176,9 +172,9 @@ final class CGImage_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGImageExAveragePerformance() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(

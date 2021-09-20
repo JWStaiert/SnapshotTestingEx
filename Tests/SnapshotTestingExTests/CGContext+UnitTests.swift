@@ -10,12 +10,12 @@ import SnapshotTesting
 import XCTest
 
 final class CGContext_UnitTests: XCTestCase {
-
+  
   static var arrow: CGContext!
   static var arrowOffByOne: CGContext!
   static var largeArrow: CGContext!
   static var largeArrowOffByOne: CGContext!
-
+  
   class func context(for cgImage: CGImage) -> CGContext? {
     guard
       let space = cgImage.colorSpace,
@@ -32,17 +32,17 @@ final class CGContext_UnitTests: XCTestCase {
     context.draw(cgImage, in: CGRect(x: 0, y: 0, width: cgImage.width, height: cgImage.height))
     return context
   }
-
+  
   override class func setUp() {
-
+    
     Self.arrow = context(for: CGImage.arrow)
     Self.arrowOffByOne = context(for: CGImage.arrowOffByOne)
     Self.largeArrow = context(for: CGImage.largeArrow)
     Self.largeArrowOffByOne = context(for: CGImage.largeArrowOffByOne)
   }
-
+  
   func testCGContextExExact() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       assertSnapshot(
         matching: Self.arrow,
@@ -53,12 +53,11 @@ final class CGContext_UnitTests: XCTestCase {
       )
     }
   }
-
+  
   func testCGContextExComponentFail() {
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       assertSnapshot(
         matching: Self.arrowOffByOne,
         as: .imageEx(
@@ -68,9 +67,9 @@ final class CGContext_UnitTests: XCTestCase {
       )
     }
   }
-
+  
   func testCGContextExComponent() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       assertSnapshot(
         matching: Self.arrowOffByOne,
@@ -81,12 +80,11 @@ final class CGContext_UnitTests: XCTestCase {
       )
     }
   }
-
+  
   func testCGContextExAverageFail() {
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       assertSnapshot(
         matching: Self.arrowOffByOne,
         as: .imageEx(
@@ -96,9 +94,9 @@ final class CGContext_UnitTests: XCTestCase {
       )
     }
   }
-
+  
   func testCGContextExAverage() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       assertSnapshot(
         matching: Self.arrowOffByOne,
@@ -109,9 +107,9 @@ final class CGContext_UnitTests: XCTestCase {
       )
     }
   }
-
+  
   func testCGContextExExactPerformance() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -125,9 +123,9 @@ final class CGContext_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGContextExExactOffByOnePerformance() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -141,12 +139,11 @@ final class CGContext_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGContextExComponentFailPerformance() {
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       measure {
         assertSnapshot(
           matching: Self.largeArrowOffByOne,
@@ -159,9 +156,9 @@ final class CGContext_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGContextExComponentPerformance() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
@@ -175,12 +172,11 @@ final class CGContext_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGContextExAverageFailPerformance() {
-
-    XCTExpectFailure()
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
+      XCTExpectFailure()
       measure {
         assertSnapshot(
           matching: Self.largeArrowOffByOne,
@@ -193,9 +189,9 @@ final class CGContext_UnitTests: XCTestCase {
       }
     }
   }
-
+  
   func testCGContextExAveragePerformance() {
-
+    
     if !ProcessInfo.processInfo.environment.keys.contains("GITHUB_WORKFLOW") {
       measure {
         assertSnapshot(
