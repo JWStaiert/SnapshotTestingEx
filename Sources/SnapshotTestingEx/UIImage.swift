@@ -79,6 +79,15 @@ extension Diffing where Value == UIImage {
   }
 }
 
+extension UIView {
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
+}
+
 extension Snapshotting where Value == UIImage, Format == UIImage {
 
   /// A snapshot strategy for comparing UIImages based on pixel equality.
